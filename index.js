@@ -1,42 +1,32 @@
 document.getElementById("click").addEventListener("click", cpsRun)
 
-let time = 0;
 let timer = document.getElementById("timer");
-let clickCount = 0;
 let clickOut = document.getElementById("click-out");
 let cpsOut = document.getElementById("cps-out");
+let time = 0;
+let clickCount = 0;
 let functionIsRunning = false;
 
 
 function cpsRun() {
     if (!functionIsRunning) {
-        reset();
+        functionIsRunning = true;
+        clickCount = 0;
+        time = 10;
+        timer.innerHTML = time;
+        cpsOut = "-";
         const startTimer = setInterval(() => {
             if (time > 0) {
                 time--;
                 timer.innerHTML = time;
             } else {
+                clearInterval(startTimer);
                 timer.innerHTML = "-";
                 calculateCPS();
                 setTimeout(() => {functionIsRunning = false}, 1000);
-                clearInterval(startTimer);
             }
         }, 1000)
-    } else {
-        cpsRunning();
-    }
-    functionIsRunning = true;
-}
-
-function reset() {
-    clickCount = 0;
-    time = 10;
-    timer.innerHTML = time;
-    cpsOut = "-";
-}
-
-function cpsRunning() {
-    if (time > 0) {
+    } else if (time > 0) {
         clickCount++;
         clickOut.innerHTML = clickCount;
     }
